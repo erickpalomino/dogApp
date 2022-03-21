@@ -3,7 +3,7 @@ import { Dog } from "../../interfaces/dogs/dog";
 import { axiosCustom } from "../../utils/axiosCustom";
 import { toast } from "toast-notification-alert";
 import { Cloudinary } from "@cloudinary/url-gen";
-import {v2 as cloudinary}  from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 import { url } from "inspector";
 
 export default function DogRegister() {
@@ -28,7 +28,11 @@ export default function DogRegister() {
     e.preventDefault();
     console.log(state);
     axiosCustom
-      .post(process.env.REACT_APP_API_URL + "/api/worker/dog/register", state)
+      .post(
+        process.env.REACT_APP_API_URL + "/api/worker/dog/register",
+        state,
+        {}
+      )
       .then((response) => {
         console.log(JSON.stringify(response));
         toast.show({
@@ -37,6 +41,7 @@ export default function DogRegister() {
           type: "info",
           newestOnTop: true,
         });
+        submitFile(e);
       })
       .catch((error) => {
         console.log(error);
@@ -55,8 +60,45 @@ export default function DogRegister() {
     setFile(files[0]);
     console.log(URL.createObjectURL(files[0]));
   };
-  
 
+  const submitFile = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    var formData = new FormData();
+    if (!file) {
+      return;
+    }
+    formData.append("file", file);
+    const config = {
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+    };
+
+    axiosCustom
+      .post(
+        process.env.REACT_APP_API_URL + "/api/worker/dog/"+state.dni+"/upload",
+        formData,
+        config
+      )
+      .then((response) => {
+        console.log(JSON.stringify(response));
+        toast.show({
+          title: "Subida de Archivo correcto",
+          message: response.data,
+          type: "info",
+          newestOnTop: true,
+        });
+      })
+      .catch((error) => {
+        toast.show({
+          title: "Subida de Archivo  incorrecto",
+          message: error.data,
+          type: "error",
+          newestOnTop: true,
+        });
+      });
+
+  };
 
   return (
     <>
@@ -135,7 +177,6 @@ export default function DogRegister() {
             className="form-control"
             id="pic"
             placeholder="Ingresa el archivo de la imagen del Perro"
-            
           />
         </div>
 
