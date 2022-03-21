@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useContext, useState  } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "toast-notification-alert";
 import { User } from "../../interfaces/users/users";
 import { axiosCustom } from "../../utils/axiosCustom";
 import { AuthContext } from "../../utils/userContext";
@@ -25,7 +26,8 @@ export default function FormLogin() {
     .then(response=>{console.log(JSON.stringify(response.data.token));
     signin(response.data.token);
     navigate("/dog/find")
-    })};
+    })
+    .catch(error=>{toast.show({title:"Credenciales Incorrectas",message:"Ingrese unas credenciales correctas",newestOnTop:true,type:"error"})})};
 
   return (
     <>

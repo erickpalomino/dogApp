@@ -17,13 +17,17 @@ export default function FormRegister() {
     e.preventDefault();
     console.log(state)
     if( validatePassword(state.password)){
-      axios.post(process.env.REACT_APP_API_URL+"/api/register",state).then(response => {console.log(JSON.stringify(response))});
+      axios.post(process.env.REACT_APP_API_URL+"/api/register",state).then(response => {console.log(JSON.stringify(response));
+        toast.show({title:'Registro Correcto',newestOnTop:true,message:'Contraseña cumple con el formato',type:'info'});})
+        .catch(error=>{console.log(error);
+        toast.show({title:'Error al Registrar',newestOnTop:true,message:error,type:'error'})}
+        )
     }
   }
   const validatePassword=(password:string)=>{
     var regexp=/(?=.*[0-9]{2})(?=.*[A-Z])(?=.{8,})(?=.*[#-/\\?]{2})/;
     if(password.match(regexp)){
-      toast.show({title:'Formato Correcto',newestOnTop:true,message:'Formato Correcto',type:'info'});
+      
       return true;
     }
     else{
