@@ -1,9 +1,9 @@
 export interface Dog{
-  dni:string,
+  dni:number,
   name:string,
   race:string,
-  genre:string,
-  birth:string,
+  genre:String,
+  birth: Date,
   pic:string,
 }
 

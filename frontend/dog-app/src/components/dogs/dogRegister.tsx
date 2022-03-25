@@ -5,22 +5,23 @@ import { toast } from "toast-notification-alert";
 import { Cloudinary } from "@cloudinary/url-gen";
 import { v2 as cloudinary } from "cloudinary";
 import { url } from "inspector";
+import { timeStamp } from "console";
 
 export default function DogRegister() {
   const blankDog = {
-    dni: "",
+    dni: 0,
     name: "",
     race: "",
     genre: "",
-    birth: "",
+    birth: new Date() ,
     pic: "",
   };
   const [file, setFile] = useState<File>();
   const [state, setState] = useState<Dog>(blankDog);
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-    const { id, value } = e.currentTarget;
-    setState({ ...state, [id]: value });
+    const target = e.currentTarget;
+    setState({ ...state, [target.id]:target.valueAsDate||target.valueAsNumber||target.value  });
     console.log(state);
   };
 
@@ -49,8 +50,8 @@ export default function DogRegister() {
   };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { id, value } = e.currentTarget;
-    setState({ ...state, [id]: value });
+    const target = e.currentTarget;
+    setState({ ...state, [target.id]:parseInt(target.value)||target.value });
     console.log(state);
   };
 
