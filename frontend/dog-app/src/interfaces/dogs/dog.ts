@@ -40,7 +40,10 @@ export interface Diagnostic{
   symptom     :string ,
 	medicines   :string  ,
 	price       :number, 
-	bloodResult :string,  
+	bloodResult :string,
+  date:Date,  
 	xrayPic     :string , 
-	dogID       :number,    
+	dogID       :number,
+  diagnostic :string, 
+  doctor:string,   
 }

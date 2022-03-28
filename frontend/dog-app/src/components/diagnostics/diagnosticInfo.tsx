@@ -73,9 +73,10 @@ export default function DiagnosticTable() {
       <table className="table">
         <thead>
           <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Sintomas</th>
+            <th scope="col">Doctor</th>
+            <th scope="col">Diagnóstico</th>
             <th scope="col">Medicinas</th>
+            <th scope="col">Fecha</th>
             <th scope="col">Prueba de Sangre</th>
             <th scope="col">Rayos X</th>
             <th scope="col">Precio</th>
@@ -84,9 +85,10 @@ export default function DiagnosticTable() {
         <tbody>
           {dog.diagnostics?.map((diagnostic) => (
             <tr>
-              <th scope="row">{diagnostic.dogID}</th>
-              <td>{diagnostic.symptom}</td>
+              <th scope="row">{diagnostic.doctor}</th>
+              <td>{diagnostic.diagnostic}</td>
               <td>{diagnostic.medicines}</td>
+              <td>{new Date(diagnostic.date).toLocaleDateString()}</td>
               <td>
                 <a href={diagnostic.bloodResult}>Ver Resultados</a>
               </td>

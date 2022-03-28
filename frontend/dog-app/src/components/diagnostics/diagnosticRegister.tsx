@@ -14,7 +14,10 @@ export default function DiagnosticForm(props:diagFormInterface) {
 	price       :0, 
 	bloodResult :"",  
 	xrayPic     :"" , 
-	dogID       :0,   
+	dogID       :0,
+  diagnostic:"",
+  date:new Date(),
+  doctor:"",   
   };
   const [xrayFile, setXrayFile] = useState<File>()
   const [brFile, setBrFile] = useState<File>()
@@ -102,6 +105,16 @@ export default function DiagnosticForm(props:diagFormInterface) {
             onChange={handleTextAreaChange}
             className="form-control"
             id="symptom"
+            placeholder="Ingresa los sintomas de la mascota"
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Diagnostico</label>
+          <textarea
+            onChange={handleTextAreaChange}
+            className="form-control"
+            id="diagnostic"
             placeholder="Ingresa los sintomas de la mascota"
             required
           />
