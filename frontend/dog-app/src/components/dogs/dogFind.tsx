@@ -52,7 +52,7 @@ export default function DogFind() {
         </button>
         {userType=="doctor"?<a href="/dog/register" className="btn btn-secondary ml-1">
           Registrar Perro
-        </a>:<p>{userType}</p>}
+        </a>:<></>}
       </form>
       <table className="table">
         <thead>
