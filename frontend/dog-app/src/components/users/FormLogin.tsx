@@ -10,14 +10,14 @@ import { AuthContext } from "../../utils/userContext";
 export default function FormLogin() {
   const navigate=useNavigate();
   const {signin} = useContext(AuthContext)
-  const blankUser = {username: "", password:"" };
-  const [state, setState] = useState<User>(blankUser);
+  const [state, setState] = useState({username: "", password:"" });
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { id, value } = e.currentTarget;
     setState({ ...state, [id]: value });
     console.log(state);
   };
+  
   
   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();

@@ -10,6 +10,7 @@ import DogRegister from "./components/dogs/dogRegister";
 import DogFind from "./components/dogs/dogFind";
 import { AuthContext } from "./utils/userContext";
 import { useContext } from "react";
+import DiagnosticTable from "./components/diagnostics/diagnosticInfo";
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                   <Route path="/"></Route>
                   <Route path="/dog/register" element={<DogRegister />} />
                   <Route path="/dog/find" element={<DogFind />} />
+                  <Route path="/dog/:dni/info" element={<DiagnosticTable />} />
                 </Route>
               </Routes>
             </BrowserRouter>

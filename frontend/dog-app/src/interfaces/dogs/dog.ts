@@ -1,3 +1,6 @@
+import { StringMappingType } from "typescript"
+
+
 export interface Dog{
   dni:number,
   name:string,
@@ -20,4 +23,24 @@ export interface DogFile{
 
 export interface FinDogRequest{
   name:string,
+}
+
+export interface DogDiag{
+  ID:number,
+  dni:number,
+  name:string,
+  race:string,
+  genre:String,
+  birth: Date,
+  pic:string,
+  diagnostics:Diagnostic[]
+}
+
+export interface Diagnostic{
+  symptom     :string ,
+	medicines   :string  ,
+	price       :number, 
+	bloodResult :string,  
+	xrayPic     :string , 
+	dogID       :number,    
 }

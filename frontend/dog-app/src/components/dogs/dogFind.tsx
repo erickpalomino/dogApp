@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { dog } from "@cloudinary/url-gen/qualifiers/focusOn";
+import { useContext, useEffect, useState } from "react";
 import { Dog, FinDogRequest } from "../../interfaces/dogs/dog";
 import { axiosCustom } from "../../utils/axiosCustom";
+import { AuthContext } from "../../utils/userContext";
 
 export default function DogFind() {
   const blankFindDog = {
@@ -8,6 +10,7 @@ export default function DogFind() {
   };
   const [state, setState] = useState<FinDogRequest>(blankFindDog);
   const [result,setResult]=useState<Dog[]>([]);
+  const {userType} = useContext(AuthContext)
 
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { id, value } = e.currentTarget;
@@ -47,9 +50,9 @@ export default function DogFind() {
         <button type="submit" className="btn btn-primary mr-2">
           Consultar Perro
         </button>
-        <a href="/dog/register" className="btn btn-secondary ml-1">
+        {userType=="doctor"?<a href="/dog/register" className="btn btn-secondary ml-1">
           Registrar Perro
-        </a>
+        </a>:<p>{userType}</p>}
       </form>
       <table className="table">
         <thead>
@@ -60,6 +63,7 @@ export default function DogFind() {
             <th scope="col">Género</th>
             <th scope="col">Nacimiento</th>
             <th scope="col">Foto</th>
+            <th scope="col">Opcion</th>
           </tr>
         </thead>
         <tbody>
@@ -69,14 +73,14 @@ export default function DogFind() {
               <td>{resultItem.name}</td>
               <td>{resultItem.race}</td>
               <td>{resultItem.genre}</td>
-              <td>{resultItem.birth}</td>
+              <td>{new Date(resultItem.birth).toLocaleDateString()}</td>
               <td><img style={{height:"50px"}} src={resultItem.pic} alt="image" />
               </td>
+              <td><a href={"/dog/"+resultItem.dni+"/info"}>Ver Diagnósticos</a></td>
             </tr>
           ))}
         </tbody>
       </table>
     </>
-    
   );
 }
