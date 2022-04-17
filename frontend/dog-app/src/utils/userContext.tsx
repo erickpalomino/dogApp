@@ -18,11 +18,12 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [authState, setAuthState] = useState<AuthState>("checking");
   const [userType,setUserType]=useState<UserType>("unkown");
   const [token, setToken] = useState<string | null>(null);
-
-  useEffect(() => {
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {   
     const token = localStorage.getItem("token");
     if (!token) setAuthState("not-authenticated");
     else {
+      setLoading(true)
       axiosCustom.get(process.env.REACT_APP_API_URL+"/api/getUser")
       .then((response)=>{
         setUserType(response.data.data.type);
@@ -30,13 +31,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((error)=>{
         console.log(error)
-      })
+      }).finally(()=>{setLoading(false)})
   }
   }, []);
 
   const signin = (token: string) => {
     localStorage.setItem("token", token);
     setToken(token);
+    setLoading(true)
     axiosCustom.get(process.env.REACT_APP_API_URL+"/api/getUser")
       .then((response)=>{
         setUserType(response.data.data.type);
@@ -46,6 +48,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       .catch((error)=>{
         console.log(error)
       })
+      .finally(()=>{setLoading(false)})
   };
 
   const logout = () => {
@@ -54,11 +57,14 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setToken(null);
   };
 
+   if (loading) {
+    return <p>Data is loading...</p>;
+  }else{
   return (
     <AuthContext.Provider value={{ userType,authState, token, signin, logout }}>
       {children}
     </AuthContext.Provider>
-  );
+  );}
 };
 
 export default AuthProvider;

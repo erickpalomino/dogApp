@@ -25,7 +25,8 @@ export default function FormLogin() {
     axiosCustom.post(process.env.REACT_APP_API_URL+"/api/login",state)
     .then(response=>{console.log(JSON.stringify(response.data.token));
     signin(response.data.token);
-    navigate("/")
+    navigate("/");
+    window.location.reload()
     })
     .catch(error=>{toast.show({title:"Credenciales Incorrectas",message:"Ingrese unas credenciales correctas",newestOnTop:true,type:"error"})})};
 
